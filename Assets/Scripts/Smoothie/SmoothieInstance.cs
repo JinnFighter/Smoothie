@@ -4,6 +4,7 @@ namespace Smoothie
 {
     public class SmoothieInstance : MonoBehaviour
     {
+        [SerializeField] private SmoothieConfig _config;
         public bool IsInitialized { get; private set; }
 
         private void Awake()
