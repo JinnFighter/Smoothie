@@ -1,3 +1,4 @@
+using Smoothie.Pooling;
 using UnityEngine;
 
 namespace Smoothie
@@ -5,6 +6,7 @@ namespace Smoothie
     public class SmoothieInstance : MonoBehaviour
     {
         [SerializeField] private SmoothieConfig _config;
+        [SerializeField] private BasePoolProvider _poolProvider;
         public bool IsInitialized { get; private set; }
 
         private void Awake()
@@ -20,6 +22,7 @@ namespace Smoothie
                 return;
             }
 
+            _poolProvider.Init(_config);
             IsInitialized = true;
             Debug.Log("Smoothie successfully initialized");
         }
@@ -32,6 +35,7 @@ namespace Smoothie
                 return;
             }
 
+            _poolProvider.Terminate();
             IsInitialized = false;
             Debug.Log("Smoothie successfully terminated");
         }
