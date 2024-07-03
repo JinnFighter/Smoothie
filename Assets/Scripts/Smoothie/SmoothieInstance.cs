@@ -1,3 +1,4 @@
+using Smoothie.Layers;
 using Smoothie.Pooling;
 using UnityEngine;
 
@@ -7,6 +8,7 @@ namespace Smoothie
     {
         [SerializeField] private SmoothieConfig _config;
         [SerializeField] private BasePoolProvider _poolProvider;
+        [SerializeField] private ScreenLayer _screenLayer;
         public bool IsInitialized { get; private set; }
 
         private void Awake()
