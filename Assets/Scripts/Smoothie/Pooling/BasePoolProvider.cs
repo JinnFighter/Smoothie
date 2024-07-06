@@ -1,4 +1,5 @@
-﻿using Smoothie.Widgets;
+﻿using System;
+using Smoothie.Widgets;
 using UnityEngine;
 
 namespace Smoothie.Pooling
@@ -8,6 +9,7 @@ namespace Smoothie.Pooling
         public abstract void Init(SmoothieConfig config);
         public abstract void Terminate();
         public abstract T Get<T>() where T : BaseView;
+        public abstract BaseView Get(Type type);
         public abstract void Release<T>(T obj) where T : BaseView;
     }
 }

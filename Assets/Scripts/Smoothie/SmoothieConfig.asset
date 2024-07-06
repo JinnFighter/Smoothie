@@ -12,3 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95b745ccbe9e04b41aa776edaa47d239, type: 3}
   m_Name: SmoothieConfig
   m_EditorClassIdentifier: 
+  <ViewItems>k__BackingField:
+  - {fileID: 11400000, guid: d10f7d4e123dbc846929be7edf22585d, type: 2}

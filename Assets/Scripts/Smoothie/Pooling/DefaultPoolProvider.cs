@@ -46,9 +46,20 @@ namespace Smoothie.Pooling
                 throw new Exception($"Pool size limit reached for object of type : {typeof(T)}");
 
             var res = items.Dequeue();
-            res.transform.SetParent(null);
+            res.transform.SetParent(null, false);
             res.gameObject.SetActive(true);
             return (T)res;
+        }
+
+        public override BaseView Get(Type type)
+        {
+            if (!_pooledItems.TryGetValue(type, out var items))
+                throw new Exception($"Pool size limit reached for object of type : {type}");
+
+            var res = items.Dequeue();
+            res.transform.SetParent(null, false);
+            res.gameObject.SetActive(true);
+            return res;
         }
 
         public override void Release<T>(T obj)
@@ -74,7 +85,7 @@ namespace Smoothie.Pooling
                     _pooledItems.Add(viewItemConfig.View.GetType(), items);
                 }
 
-                var view = Instantiate(viewItemConfig.View, _poolParent);
+                var view = Instantiate(viewItemConfig.View, _poolParent, false);
                 view.gameObject.SetActive(false);
                 items.Enqueue(view);
             }
