@@ -19,6 +19,7 @@ namespace Smoothie
         private readonly Dictionary<IViewModel, (IWidget widget, BaseView view)> _widgets = new();
 
         private readonly Dictionary<string, Type> _viewTypes = new();
+        private readonly Dictionary<string, Type> _viewFullTypes = new();
         public bool IsInitialized { get; private set; }
 
         private void Awake()
@@ -35,11 +36,15 @@ namespace Smoothie
             }
 
             _poolProvider.Init(_config);
+            foreach (var item in _config.ViewItems)
+            {
+                _viewFullTypes[item.View.GetType().Name] = item.View.GetType();
+            }
             foreach (var layer in _widgetSettings.LayerWidgetSettings)
             {
                 foreach (var widgetSetting in layer.WidgetSettings)
                 {
-                    _viewTypes[widgetSetting.WidgetType] = widgetSetting.ViewItemConfig.View.GetType();
+                    _viewTypes[widgetSetting.WidgetType] = _viewFullTypes[widgetSetting.ViewItemType];
                 }
             }
             IsInitialized = true;
@@ -54,6 +59,7 @@ namespace Smoothie
                 return;
             }
             
+            _viewFullTypes.Clear();
             _viewTypes.Clear();
 
             var models = _widgets.Keys.ToList();
@@ -68,20 +74,19 @@ namespace Smoothie
             IsInitialized = false;
             Debug.Log("Smoothie successfully terminated");
         }
-
-        public void Open<TWidget>(IViewModel model, Type viewType) where TWidget : IWidget
-        {
-            var view = _poolProvider.Get(viewType);
-            view.transform.SetParent(_screenLayer.LayerTransform, false);
-            var widget = Activator.CreateInstance<TWidget>();
-            widget.Setup(model, view);
-            widget.Init();
-            _widgets[model] = (widget, view);
-        }
         
         public void Open<TWidget>(IViewModel model) where TWidget : IWidget
         {
-            var viewType = _viewTypes[typeof(TWidget).Name];
+            //1. Get widget type
+            //2. Get layer by widget type (requires pre-saved layer)
+            //3. Check if layer can accept widget with this type
+            //4. If layer can accept widget with this type -> proceed, else -> do nothing
+            //5. Get view type from pre-saved viewTypes (needs widgetType)
+            //6. Create view from pool
+            //7. Create widget from widget type (TODO: think about pooling widget logic classes)
+            //8. Handle adding widget to layer
+            var widgetType = typeof(TWidget);
+            var viewType = _viewTypes[widgetType.Name];
             var view = _poolProvider.Get(viewType);
             view.transform.SetParent(_screenLayer.LayerTransform, false);
             var widget = Activator.CreateInstance<TWidget>();

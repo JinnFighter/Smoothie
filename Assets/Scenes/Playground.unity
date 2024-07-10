@@ -496,6 +496,64 @@ PrefabInstance:
       propertyPath: m_Name
       value: SmoothieInstance
       objectReference: {fileID: 0}
+    - target: {fileID: 5671891860308673562, guid: 5c699608d0399e44ea5f6b3a56afdccd,
+        type: 3}
+      propertyPath: _config.<ViewItems>k__BackingField.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5671891860308673562, guid: 5c699608d0399e44ea5f6b3a56afdccd,
+        type: 3}
+      propertyPath: _config.<ViewItems>k__BackingField.Array.data[0].<View>k__BackingField
+      value: 
+      objectReference: {fileID: 5768077450806992718, guid: f88a9909401ae684c950e9d03f94cf6b,
+        type: 3}
+    - target: {fileID: 5671891860308673562, guid: 5c699608d0399e44ea5f6b3a56afdccd,
+        type: 3}
+      propertyPath: _config.<ViewItems>k__BackingField.Array.data[0].<NeedPrewarm>k__BackingField
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5671891860308673562, guid: 5c699608d0399e44ea5f6b3a56afdccd,
+        type: 3}
+      propertyPath: _config.<ViewItems>k__BackingField.Array.data[0].<PrewarmCount>k__BackingField
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5671891860308673562, guid: 5c699608d0399e44ea5f6b3a56afdccd,
+        type: 3}
+      propertyPath: _widgetSettings.<LayerWidgetSettings>k__BackingField.Array.data[0].<WidgetSettings>k__BackingField.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5671891860308673562, guid: 5c699608d0399e44ea5f6b3a56afdccd,
+        type: 3}
+      propertyPath: _widgetSettings.<LayerWidgetSettings>k__BackingField.Array.data[0].<WidgetSettings>k__BackingField.Array.data[0].<WidgetType>k__BackingField
+      value: PlaygroundUiScreen
+      objectReference: {fileID: 0}
+    - target: {fileID: 5671891860308673562, guid: 5c699608d0399e44ea5f6b3a56afdccd,
+        type: 3}
+      propertyPath: _widgetSettings.<LayerWidgetSettings>k__BackingField.Array.data[0].<WidgetSettings>k__BackingField.Array.data[0].<ViewItemType>k__BackingField
+      value: PlaygroundScreenView
+      objectReference: {fileID: 0}
+    - target: {fileID: 5671891860308673562, guid: 5c699608d0399e44ea5f6b3a56afdccd,
+        type: 3}
+      propertyPath: _widgetSettings.<LayerWidgetSettings>k__BackingField.Array.data[0].<WidgetSettings>k__BackingField.Array.data[0].<ViewItemConfig>k__BackingField
+      value: 
+      objectReference: {fileID: 11400000, guid: d10f7d4e123dbc846929be7edf22585d,
+        type: 2}
+    - target: {fileID: 5671891860308673562, guid: 5c699608d0399e44ea5f6b3a56afdccd,
+        type: 3}
+      propertyPath: _widgetSettings.<LayerWidgetSettings>k__BackingField.Array.data[0].<WidgetSettings>k__BackingField.Array.data[0].<ViewItemConfig>k__BackingField.<View>k__BackingField
+      value: 
+      objectReference: {fileID: 5768077450806992718, guid: f88a9909401ae684c950e9d03f94cf6b,
+        type: 3}
+    - target: {fileID: 5671891860308673562, guid: 5c699608d0399e44ea5f6b3a56afdccd,
+        type: 3}
+      propertyPath: _widgetSettings.<LayerWidgetSettings>k__BackingField.Array.data[0].<WidgetSettings>k__BackingField.Array.data[0].<ViewItemConfig>k__BackingField.<NeedPrewarm>k__BackingField
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5671891860308673562, guid: 5c699608d0399e44ea5f6b3a56afdccd,
+        type: 3}
+      propertyPath: _widgetSettings.<LayerWidgetSettings>k__BackingField.Array.data[0].<WidgetSettings>k__BackingField.Array.data[0].<ViewItemConfig>k__BackingField.<PrewarmCount>k__BackingField
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6085965429007902778, guid: 5c699608d0399e44ea5f6b3a56afdccd,
         type: 3}
       propertyPath: m_Pivot.x
