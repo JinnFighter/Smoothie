@@ -35,9 +35,12 @@ namespace Smoothie
             }
 
             _poolProvider.Init(_config);
-            foreach (var widgetSetting in _widgetSettings.WidgetSettings)
+            foreach (var layer in _widgetSettings.LayerWidgetSettings)
             {
-                _viewTypes[widgetSetting.WidgetType] = widgetSetting.ViewItemConfig.View.GetType();
+                foreach (var widgetSetting in layer.WidgetSettings)
+                {
+                    _viewTypes[widgetSetting.WidgetType] = widgetSetting.ViewItemConfig.View.GetType();
+                }
             }
             IsInitialized = true;
             Debug.Log("Smoothie successfully initialized");

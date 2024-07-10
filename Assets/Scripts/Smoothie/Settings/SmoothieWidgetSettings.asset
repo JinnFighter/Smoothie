@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39d1c38ceada98a4f95f226b0f0b4f33, type: 3}
   m_Name: SmoothieWidgetSettings
   m_EditorClassIdentifier: 
-  <WidgetSettings>k__BackingField:
-  - <WidgetType>k__BackingField: PlaygroundUiScreen
-    <ViewItemConfig>k__BackingField: {fileID: 11400000, guid: d10f7d4e123dbc846929be7edf22585d,
-      type: 2}
+  <LayerWidgetSettings>k__BackingField:
+  - <WidgetSettings>k__BackingField:
+    - <WidgetType>k__BackingField: PlaygroundUiScreen
+      <ViewItemConfig>k__BackingField: {fileID: 11400000, guid: d10f7d4e123dbc846929be7edf22585d,
+        type: 2}
