@@ -14,7 +14,7 @@ namespace Playground
         private void Start()
         {
             _smoothieInstance.Init();
-            _smoothieInstance.Open<PlaygroundUiScreen>(_model, typeof(PlaygroundScreenView));
+            _smoothieInstance.Open<PlaygroundUiScreen>(_model);
         }
 
         private void OnDestroy()

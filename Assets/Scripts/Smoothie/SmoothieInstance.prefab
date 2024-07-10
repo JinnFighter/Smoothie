@@ -212,6 +212,7 @@ MonoBehaviour:
   _config: {fileID: 11400000, guid: e1aea3f07adcd9a4485186dbde938466, type: 2}
   _poolProvider: {fileID: 5567964715873485241}
   _screenLayer: {fileID: 1864615509477469990}
+  _widgetSettings: {fileID: 11400000, guid: 070c51571b34c1945a4822fd49438917, type: 2}
 --- !u!114 &5567964715873485241
 MonoBehaviour:
   m_ObjectHideFlags: 0

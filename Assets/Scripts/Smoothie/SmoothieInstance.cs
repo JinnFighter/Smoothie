@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Smoothie.Layers;
 using Smoothie.Pooling;
+using Smoothie.Settings;
 using Smoothie.Widgets;
 using UnityEngine;
 
@@ -13,8 +14,11 @@ namespace Smoothie
         [SerializeField] private SmoothieConfig _config;
         [SerializeField] private BasePoolProvider _poolProvider;
         [SerializeField] private ScreenLayer _screenLayer;
+        [SerializeField] private SmoothieWidgetSettings _widgetSettings;
 
         private readonly Dictionary<IViewModel, (IWidget widget, BaseView view)> _widgets = new();
+
+        private readonly Dictionary<string, Type> _viewTypes = new();
         public bool IsInitialized { get; private set; }
 
         private void Awake()
@@ -31,6 +35,10 @@ namespace Smoothie
             }
 
             _poolProvider.Init(_config);
+            foreach (var widgetSetting in _widgetSettings.WidgetSettings)
+            {
+                _viewTypes[widgetSetting.WidgetType] = widgetSetting.ViewItemConfig.View.GetType();
+            }
             IsInitialized = true;
             Debug.Log("Smoothie successfully initialized");
         }
@@ -42,6 +50,8 @@ namespace Smoothie
                 Debug.Log("Smoothie is not initialized, no need to terminate it");
                 return;
             }
+            
+            _viewTypes.Clear();
 
             var models = _widgets.Keys.ToList();
             foreach (var viewModel in models)
@@ -58,6 +68,17 @@ namespace Smoothie
 
         public void Open<TWidget>(IViewModel model, Type viewType) where TWidget : IWidget
         {
+            var view = _poolProvider.Get(viewType);
+            view.transform.SetParent(_screenLayer.LayerTransform, false);
+            var widget = Activator.CreateInstance<TWidget>();
+            widget.Setup(model, view);
+            widget.Init();
+            _widgets[model] = (widget, view);
+        }
+        
+        public void Open<TWidget>(IViewModel model) where TWidget : IWidget
+        {
+            var viewType = _viewTypes[typeof(TWidget).Name];
             var view = _poolProvider.Get(viewType);
             view.transform.SetParent(_screenLayer.LayerTransform, false);
             var widget = Activator.CreateInstance<TWidget>();
