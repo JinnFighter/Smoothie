@@ -9,24 +9,25 @@ using UnityEngine;
 
 namespace Smoothie
 {
-    public class SmoothieInstance : MonoBehaviour
+    public class SmoothieInstance : MonoBehaviour, ISmoothieInstance
     {
         [SerializeField] private SmoothieConfig _config;
         [SerializeField] private BasePoolProvider _poolProvider;
         [SerializeField] private ScreenLayer _screenLayer;
         [SerializeField] private SmoothieWidgetSettings _widgetSettings;
-
-        private readonly Dictionary<IViewModel, (IWidget widget, BaseView view)> _widgets = new();
+        private readonly Dictionary<string, BaseUiLayer> _layerObjects = new();
+        private readonly Dictionary<string, Type> _viewFullTypes = new();
 
         private readonly Dictionary<string, Type> _viewTypes = new();
-        private readonly Dictionary<string, Type> _viewFullTypes = new();
-        private readonly Dictionary<string, BaseUiLayer> _layerObjects = new();
-        public bool IsInitialized { get; private set; }
+
+        private readonly Dictionary<IViewModel, (IWidget widget, BaseView view)> _widgets = new();
 
         private void Awake()
         {
             DontDestroyOnLoad(this);
         }
+
+        public bool IsInitialized { get; private set; }
 
         public void Init()
         {
@@ -37,18 +38,14 @@ namespace Smoothie
             }
 
             _poolProvider.Init(_config);
-            foreach (var item in _config.ViewItems)
-            {
-                _viewFullTypes[item.View.GetType().Name] = item.View.GetType();
-            }
+            foreach (var item in _config.ViewItems) _viewFullTypes[item.View.GetType().Name] = item.View.GetType();
             foreach (var layer in _widgetSettings.LayerWidgetSettings)
+            foreach (var widgetSetting in layer.WidgetSettings)
             {
-                foreach (var widgetSetting in layer.WidgetSettings)
-                {
-                    _viewTypes[widgetSetting.WidgetType] = _viewFullTypes[widgetSetting.ViewItemType];
-                    _layerObjects[widgetSetting.WidgetType] = layer.LayerObject;
-                }
+                _viewTypes[widgetSetting.WidgetType] = _viewFullTypes[widgetSetting.ViewItemType];
+                _layerObjects[widgetSetting.WidgetType] = layer.LayerObject;
             }
+
             IsInitialized = true;
             Debug.Log("Smoothie successfully initialized");
         }
@@ -60,34 +57,28 @@ namespace Smoothie
                 Debug.Log("Smoothie is not initialized, no need to terminate it");
                 return;
             }
-            
+
             _viewFullTypes.Clear();
             _viewTypes.Clear();
             _layerObjects.Clear();
 
             var models = _widgets.Keys.ToList();
-            foreach (var viewModel in models)
-            {
-                Close(viewModel);
-            }
-            
+            foreach (var viewModel in models) Close(viewModel);
+
             _widgets.Clear();
 
             _poolProvider.Terminate();
             IsInitialized = false;
             Debug.Log("Smoothie successfully terminated");
         }
-        
+
         public void Open<TWidget>(IViewModel model) where TWidget : IWidget
         {
             var widgetType = typeof(TWidget);
             var layerObject = _layerObjects[widgetType.Name];
             var canLayerAcceptWidget = layerObject.CanAcceptWidget<TWidget>();
-            if (!canLayerAcceptWidget)
-            {
-                return;
-            }
-            
+            if (!canLayerAcceptWidget) return;
+
             var widget = Activator.CreateInstance<TWidget>();
             var viewType = _viewTypes[widgetType.Name];
             var view = _poolProvider.Get(viewType);
