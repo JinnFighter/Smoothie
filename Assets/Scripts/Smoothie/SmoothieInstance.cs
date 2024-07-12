@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Smoothie.Layers;
 using Smoothie.Pooling;
 using Smoothie.Settings;
@@ -15,12 +14,8 @@ namespace Smoothie
         [SerializeField] private BasePoolProvider _poolProvider;
         [SerializeField] private ScreenLayer _screenLayer;
         [SerializeField] private SmoothieWidgetSettings _widgetSettings;
-        private readonly Dictionary<string, BaseUiLayer> _layerObjects = new();
-        private readonly Dictionary<string, Type> _viewFullTypes = new();
-
-        private readonly Dictionary<string, Type> _viewTypes = new();
-
-        private readonly Dictionary<IViewModel, (IWidget widget, BaseView view)> _widgets = new();
+        private readonly Dictionary<IViewModel, WidgetReference> _widgets = new();
+        private readonly Dictionary<string, WidgetInfo> _widgetSetupInfo = new();
 
         private void Awake()
         {
@@ -38,13 +33,19 @@ namespace Smoothie
             }
 
             _poolProvider.Init(_config);
-            foreach (var item in _config.ViewItems) _viewFullTypes[item.View.GetType().Name] = item.View.GetType();
-            foreach (var layer in _widgetSettings.LayerWidgetSettings)
-            foreach (var widgetSetting in layer.WidgetSettings)
+            var viewFullTypes = new Dictionary<string, Type>();
+            foreach (var item in _config.ViewItems) viewFullTypes[item.View.GetType().Name] = item.View.GetType();
+            foreach (var layerSettings in _widgetSettings.LayerWidgetSettings)
+            foreach (var widgetSetting in layerSettings.WidgetSettings)
             {
-                _viewTypes[widgetSetting.WidgetType] = _viewFullTypes[widgetSetting.ViewItemType];
-                _layerObjects[widgetSetting.WidgetType] = layer.LayerObject;
+                var widgetInfo = new WidgetInfo
+                {
+                    ViewType = viewFullTypes[widgetSetting.ViewItemType],
+                    LayerObject = layerSettings.LayerObject
+                };
+                _widgetSetupInfo[widgetSetting.WidgetType] = widgetInfo;
             }
+
 
             IsInitialized = true;
             Debug.Log("Smoothie successfully initialized");
@@ -58,48 +59,48 @@ namespace Smoothie
                 return;
             }
 
-            _viewFullTypes.Clear();
-            _viewTypes.Clear();
-            _layerObjects.Clear();
-
-            var models = _widgets.Keys.ToList();
-            foreach (var viewModel in models) CloseInner(viewModel);
-
-            _widgets.Clear();
+            foreach (var viewModel in _widgets.Keys) CloseInner(viewModel, _widgets[viewModel].Widget.GetType().Name);
 
             _poolProvider.Terminate();
+            _widgetSetupInfo.Clear();
+
             IsInitialized = false;
             Debug.Log("Smoothie successfully terminated");
         }
 
         public void Open<TWidget>(IViewModel model) where TWidget : IWidget
         {
-            var widgetType = typeof(TWidget);
-            var layerObject = _layerObjects[widgetType.Name];
-            var canLayerAcceptWidget = layerObject.CanAcceptWidget<TWidget>();
+            var widgetType = typeof(TWidget).Name;
+            var widgetSetupInfo = _widgetSetupInfo[widgetType];
+            var layerObject = widgetSetupInfo.LayerObject;
+            var canLayerAcceptWidget = layerObject.CanAcceptWidget(model);
             if (!canLayerAcceptWidget) return;
 
             var widget = Activator.CreateInstance<TWidget>();
-            var viewType = _viewTypes[widgetType.Name];
+            var viewType = widgetSetupInfo.ViewType;
             var view = _poolProvider.Get(viewType);
             widget.Setup(model, view);
-            layerObject.Open(model, widget, view);
-            _widgets[model] = (widget, view);
+            var widgetReference = layerObject.Open(model, widget, view);
             widget.Init();
+
+            _widgets[model] = widgetReference;
         }
 
         public void Close<TWidget>(IViewModel model) where TWidget : IWidget
         {
-            _widgets[model].widget.Terminate();
-            _poolProvider.Release(_widgets[model].view);
-            _widgets.Remove(model);
+            var widgetType = typeof(TWidget).Name;
+            CloseInner(model, widgetType);
         }
 
-        private void CloseInner(IViewModel model)
+        private void CloseInner(IViewModel model, string widgetType)
         {
-            _widgets[model].widget.Terminate();
-            _poolProvider.Release(_widgets[model].view);
-            _widgets.Remove(model);
+            var widgetInfo = _widgetSetupInfo[widgetType];
+            var layerObject = widgetInfo.LayerObject;
+            if (!layerObject.ContainsWidget(model)) return;
+
+            var widgetReference = layerObject.Close(model);
+            widgetReference.Widget.Terminate();
+            _poolProvider.Release(widgetReference.View);
         }
     }
 }

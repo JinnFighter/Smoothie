@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Smoothie.Widgets;
 using UnityEngine;
 
@@ -7,18 +8,36 @@ namespace Smoothie.Layers
     {
         [SerializeField] private Canvas _layerCanvas;
 
-        public override void Open<TWidget>(IViewModel model, TWidget widget, BaseView view)
+        private readonly Dictionary<IViewModel, WidgetReference> _openedReferences = new();
+
+        public override WidgetReference Open<TWidget>(IViewModel model, TWidget widget, BaseView view)
         {
+            var widgetReference = new WidgetReference
+            {
+                Model = model,
+                Widget = widget,
+                View = view
+            };
+            _openedReferences[model] = widgetReference;
             view.transform.SetParent(_layerCanvas.transform, false);
+            return widgetReference;
         }
 
-        public override void Close()
+        public override WidgetReference Close(IViewModel model)
         {
+            var widgetReference = _openedReferences[model];
+            _openedReferences.Remove(model);
+            return widgetReference;
         }
 
-        public override bool CanAcceptWidget<TWidget>()
+        public override bool CanAcceptWidget(IViewModel model)
         {
-            return true;
+            return !_openedReferences.ContainsKey(model);
+        }
+
+        public override bool ContainsWidget(IViewModel model)
+        {
+            return _openedReferences.ContainsKey(model);
         }
     }
 }

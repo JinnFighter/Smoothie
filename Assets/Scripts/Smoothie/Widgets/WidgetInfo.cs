@@ -3,10 +3,9 @@ using Smoothie.Layers;
 
 namespace Smoothie.Widgets
 {
-    public struct WidgetInfo
+    public class WidgetInfo
     {
-        public Type WidgetType;
         public Type ViewType;
-        public BaseUiLayer Layer;
+        public BaseUiLayer LayerObject;
     }
 }

@@ -4,8 +4,9 @@ namespace Smoothie.Layers
 {
     public interface IUiLayer
     {
-        void Open<TWidget>(IViewModel model, TWidget widget, BaseView view);
-        void Close();
-        bool CanAcceptWidget<TWidget>() where TWidget : IWidget;
+        WidgetReference Open<TWidget>(IViewModel model, TWidget widget, BaseView view) where TWidget : IWidget;
+        WidgetReference Close(IViewModel model);
+        bool CanAcceptWidget(IViewModel model);
+        bool ContainsWidget(IViewModel model);
     }
 }
