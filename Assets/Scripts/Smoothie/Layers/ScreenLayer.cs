@@ -1,3 +1,4 @@
+using Smoothie.Widgets;
 using UnityEngine;
 
 namespace Smoothie.Layers
@@ -6,9 +7,9 @@ namespace Smoothie.Layers
     {
         [SerializeField] private Canvas _layerCanvas;
 
-        public Transform LayerTransform => _layerCanvas.transform;
-        public override void Open()
+        public override void Open<TWidget>(IViewModel model, TWidget widget, BaseView view)
         {
+            view.transform.SetParent(_layerCanvas.transform, false);
         }
 
         public override void Close()

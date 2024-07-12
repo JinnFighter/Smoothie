@@ -20,6 +20,7 @@ namespace Smoothie
 
         private readonly Dictionary<string, Type> _viewTypes = new();
         private readonly Dictionary<string, Type> _viewFullTypes = new();
+        private readonly Dictionary<string, BaseUiLayer> _layerObjects = new();
         public bool IsInitialized { get; private set; }
 
         private void Awake()
@@ -45,6 +46,7 @@ namespace Smoothie
                 foreach (var widgetSetting in layer.WidgetSettings)
                 {
                     _viewTypes[widgetSetting.WidgetType] = _viewFullTypes[widgetSetting.ViewItemType];
+                    _layerObjects[widgetSetting.WidgetType] = layer.LayerObject;
                 }
             }
             IsInitialized = true;
@@ -61,6 +63,7 @@ namespace Smoothie
             
             _viewFullTypes.Clear();
             _viewTypes.Clear();
+            _layerObjects.Clear();
 
             var models = _widgets.Keys.ToList();
             foreach (var viewModel in models)
@@ -77,22 +80,21 @@ namespace Smoothie
         
         public void Open<TWidget>(IViewModel model) where TWidget : IWidget
         {
-            //1. Get widget type
-            //2. Get layer by widget type (requires pre-saved layer)
-            //3. Check if layer can accept widget with this type
-            //4. If layer can accept widget with this type -> proceed, else -> do nothing
-            //5. Get view type from pre-saved viewTypes (needs widgetType)
-            //6. Create view from pool
-            //7. Create widget from widget type (TODO: think about pooling widget logic classes)
-            //8. Handle adding widget to layer
             var widgetType = typeof(TWidget);
+            var layerObject = _layerObjects[widgetType.Name];
+            var canLayerAcceptWidget = layerObject.CanAcceptWidget<TWidget>();
+            if (!canLayerAcceptWidget)
+            {
+                return;
+            }
+            
+            var widget = Activator.CreateInstance<TWidget>();
             var viewType = _viewTypes[widgetType.Name];
             var view = _poolProvider.Get(viewType);
-            view.transform.SetParent(_screenLayer.LayerTransform, false);
-            var widget = Activator.CreateInstance<TWidget>();
             widget.Setup(model, view);
-            widget.Init();
+            layerObject.Open(model, widget, view);
             _widgets[model] = (widget, view);
+            widget.Init();
         }
 
         public void Close(IViewModel model)
