@@ -8,6 +8,6 @@ namespace Smoothie
         void Init();
         void Terminate();
         void Open<TWidget>(IViewModel model) where TWidget : IWidget;
-        void Close(IViewModel model);
+        void Close<TWidget>(IViewModel model) where TWidget : IWidget;
     }
 }

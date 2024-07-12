@@ -63,7 +63,7 @@ namespace Smoothie
             _layerObjects.Clear();
 
             var models = _widgets.Keys.ToList();
-            foreach (var viewModel in models) Close(viewModel);
+            foreach (var viewModel in models) CloseInner(viewModel);
 
             _widgets.Clear();
 
@@ -88,7 +88,14 @@ namespace Smoothie
             widget.Init();
         }
 
-        public void Close(IViewModel model)
+        public void Close<TWidget>(IViewModel model) where TWidget : IWidget
+        {
+            _widgets[model].widget.Terminate();
+            _poolProvider.Release(_widgets[model].view);
+            _widgets.Remove(model);
+        }
+
+        private void CloseInner(IViewModel model)
         {
             _widgets[model].widget.Terminate();
             _poolProvider.Release(_widgets[model].view);

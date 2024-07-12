@@ -8,7 +8,6 @@ namespace Playground
     {
         [SerializeField] private SmoothieInstance _smoothieInstance;
 
-
         private readonly PlaygroundScreenViewModel _model = new();
 
         private void Start()
@@ -19,7 +18,7 @@ namespace Playground
 
         private void OnDestroy()
         {
-            _smoothieInstance.Close(_model);
+            _smoothieInstance.Close<PlaygroundUiScreen>(_model);
             _smoothieInstance.Terminate();
         }
     }
