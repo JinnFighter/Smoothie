@@ -77,7 +77,7 @@ namespace Smoothie.Scripts
             var widget = Activator.CreateInstance<TWidget>();
             var viewType = widgetSetupInfo.ViewType;
             var view = _poolProvider.Get(viewType);
-            widget.Setup(model, view);
+            widget.Setup(model, view, this);
             var widgetReference = layerObject.Open(model, widget, view);
             widget.Init();
 

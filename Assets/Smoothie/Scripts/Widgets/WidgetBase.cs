@@ -4,6 +4,7 @@
     {
         protected TModel ViewModel { get; private set; }
         protected TView View { get; private set; }
+        protected ISmoothieInstance SmoothieInstance { get; private set; }
 
         public void Init()
         {
@@ -15,10 +16,11 @@
             TerminateInner();
         }
 
-        public void Setup(IViewModel model, BaseView view)
+        public void Setup(IViewModel model, BaseView view, ISmoothieInstance smoothieInstance)
         {
             ViewModel = (TModel)model;
             View = (TView)view;
+            SmoothieInstance = smoothieInstance;
         }
 
         protected virtual void InitInner()

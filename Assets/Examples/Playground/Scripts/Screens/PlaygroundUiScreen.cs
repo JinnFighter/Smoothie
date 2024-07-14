@@ -1,3 +1,4 @@
+using Examples.Playground.Scripts.Dialogs;
 using Smoothie.Scripts.Widgets;
 
 namespace Examples.Playground.Scripts.Screens
@@ -16,6 +17,7 @@ namespace Examples.Playground.Scripts.Screens
 
         private void HandleButtonCreateDialogClicked()
         {
+            SmoothieInstance.Open<PlaygroundDialog>(new PlaygroundDialogViewModel());
         }
     }
 }

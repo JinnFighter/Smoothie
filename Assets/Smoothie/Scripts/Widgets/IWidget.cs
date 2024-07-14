@@ -4,6 +4,6 @@ namespace Smoothie.Scripts.Widgets
     {
         void Init();
         void Terminate();
-        void Setup(IViewModel model, BaseView view);
+        void Setup(IViewModel model, BaseView view, ISmoothieInstance smoothieInstance);
     }
 }

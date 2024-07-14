@@ -345,7 +345,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ef16770e88947bb913a389069cc4f9a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <ButtonAccept>k__BackingField: {fileID: 0}
+  <ButtonAccept>k__BackingField: {fileID: 7682141679036394334}
 --- !u!1 &7744315845342452599
 GameObject:
   m_ObjectHideFlags: 0
@@ -358,7 +358,7 @@ GameObject:
   - component: {fileID: 8987706535267862778}
   - component: {fileID: 1675340024889086069}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: TextAccept
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -411,7 +411,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Button
+  m_text: OK
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

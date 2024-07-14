@@ -17,6 +17,7 @@ namespace Examples.Playground.Scripts.Dialogs
         private void HandleButtonAcceptClicked()
         {
             ViewModel.Accept();
+            SmoothieInstance.Close<PlaygroundDialog>(ViewModel);
         }
     }
 }
