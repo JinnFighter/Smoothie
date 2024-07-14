@@ -17,7 +17,7 @@ namespace Examples.Playground.Scripts.Screens
 
         private void HandleButtonCreateDialogClicked()
         {
-            SmoothieInstance.Open<PlaygroundDialog>(new PlaygroundDialogViewModel());
+            Open<PlaygroundDialog>(new PlaygroundDialogViewModel());
         }
     }
 }

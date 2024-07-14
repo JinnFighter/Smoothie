@@ -4,7 +4,7 @@
     {
         protected TModel ViewModel { get; private set; }
         protected TView View { get; private set; }
-        protected ISmoothieInstance SmoothieInstance { get; private set; }
+        private ISmoothieInstance SmoothieInstance { get; set; }
 
         public void Init()
         {
@@ -30,5 +30,8 @@
         protected virtual void TerminateInner()
         {
         }
+
+        protected void Open<TWidget>(IViewModel viewModel) where TWidget : IWidget  => SmoothieInstance.Open<TWidget>(viewModel);
+        protected void Close<TWidget>(IViewModel viewModel) where TWidget : IWidget  => SmoothieInstance.Close<TWidget>(viewModel);
     }
 }
