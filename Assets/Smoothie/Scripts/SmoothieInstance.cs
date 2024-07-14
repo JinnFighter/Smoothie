@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Smoothie.Scripts.Layers;
 using Smoothie.Scripts.Pooling;
 using Smoothie.Scripts.Settings;
 using Smoothie.Scripts.Widgets;
@@ -12,7 +11,6 @@ namespace Smoothie.Scripts
     {
         [SerializeField] private SmoothieConfig _config;
         [SerializeField] private BasePoolProvider _poolProvider;
-        [SerializeField] private ScreenLayer _screenLayer;
         [SerializeField] private SmoothieWidgetSettings _widgetSettings;
         private readonly Dictionary<IViewModel, WidgetReference> _widgets = new();
         private readonly Dictionary<string, WidgetInfo> _widgetSetupInfo = new();
