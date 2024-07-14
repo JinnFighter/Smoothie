@@ -491,6 +491,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1992069961743394934, guid: 5c699608d0399e44ea5f6b3a56afdccd,
+        type: 3}
+      propertyPath: m_AdditionalShaderChannelsFlag
+      value: 25
+      objectReference: {fileID: 0}
     - target: {fileID: 4242767014076372432, guid: 5c699608d0399e44ea5f6b3a56afdccd,
         type: 3}
       propertyPath: m_Name
@@ -499,7 +504,7 @@ PrefabInstance:
     - target: {fileID: 5671891860308673562, guid: 5c699608d0399e44ea5f6b3a56afdccd,
         type: 3}
       propertyPath: _config.<ViewItems>k__BackingField.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5671891860308673562, guid: 5c699608d0399e44ea5f6b3a56afdccd,
         type: 3}
@@ -514,12 +519,28 @@ PrefabInstance:
         type: 3}
     - target: {fileID: 5671891860308673562, guid: 5c699608d0399e44ea5f6b3a56afdccd,
         type: 3}
+      propertyPath: _config.<ViewItems>k__BackingField.Array.data[1].<View>k__BackingField
+      value: 
+      objectReference: {fileID: 6836002543636135828, guid: 89e365c84f9042346b11956e6b3cb01d,
+        type: 3}
+    - target: {fileID: 5671891860308673562, guid: 5c699608d0399e44ea5f6b3a56afdccd,
+        type: 3}
       propertyPath: _config.<ViewItems>k__BackingField.Array.data[0].<NeedPrewarm>k__BackingField
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5671891860308673562, guid: 5c699608d0399e44ea5f6b3a56afdccd,
         type: 3}
+      propertyPath: _config.<ViewItems>k__BackingField.Array.data[1].<NeedPrewarm>k__BackingField
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5671891860308673562, guid: 5c699608d0399e44ea5f6b3a56afdccd,
+        type: 3}
       propertyPath: _config.<ViewItems>k__BackingField.Array.data[0].<PrewarmCount>k__BackingField
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5671891860308673562, guid: 5c699608d0399e44ea5f6b3a56afdccd,
+        type: 3}
+      propertyPath: _config.<ViewItems>k__BackingField.Array.data[1].<PrewarmCount>k__BackingField
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5671891860308673562, guid: 5c699608d0399e44ea5f6b3a56afdccd,
@@ -535,7 +556,7 @@ PrefabInstance:
     - target: {fileID: 5671891860308673562, guid: 5c699608d0399e44ea5f6b3a56afdccd,
         type: 3}
       propertyPath: _widgetSettings.<LayerWidgetSettings>k__BackingField.Array.data[1].<WidgetSettings>k__BackingField.Array.size
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5671891860308673562, guid: 5c699608d0399e44ea5f6b3a56afdccd,
         type: 3}
@@ -545,7 +566,7 @@ PrefabInstance:
     - target: {fileID: 5671891860308673562, guid: 5c699608d0399e44ea5f6b3a56afdccd,
         type: 3}
       propertyPath: _widgetSettings.<LayerWidgetSettings>k__BackingField.Array.data[1].<WidgetSettings>k__BackingField.Array.data[0].<WidgetType>k__BackingField
-      value: PlaygroundUiScreen
+      value: PlaygroundDialog
       objectReference: {fileID: 0}
     - target: {fileID: 5671891860308673562, guid: 5c699608d0399e44ea5f6b3a56afdccd,
         type: 3}
@@ -555,7 +576,7 @@ PrefabInstance:
     - target: {fileID: 5671891860308673562, guid: 5c699608d0399e44ea5f6b3a56afdccd,
         type: 3}
       propertyPath: _widgetSettings.<LayerWidgetSettings>k__BackingField.Array.data[1].<WidgetSettings>k__BackingField.Array.data[0].<ViewItemType>k__BackingField
-      value: PlaygroundScreenView
+      value: PlaygroundDialogView
       objectReference: {fileID: 0}
     - target: {fileID: 5671891860308673562, guid: 5c699608d0399e44ea5f6b3a56afdccd,
         type: 3}
