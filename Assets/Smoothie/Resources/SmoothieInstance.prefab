@@ -288,10 +288,11 @@ MonoBehaviour:
   _config:
     <ViewItems>k__BackingField: []
   _poolProvider: {fileID: 5567964715873485241}
-  _screenLayer: {fileID: 1864615509477469990}
   _widgetSettings:
     <LayerWidgetSettings>k__BackingField:
     - <LayerObject>k__BackingField: {fileID: 1864615509477469990}
+      <WidgetSettings>k__BackingField: []
+    - <LayerObject>k__BackingField: {fileID: 9140185963819123704}
       <WidgetSettings>k__BackingField: []
 --- !u!114 &5567964715873485241
 MonoBehaviour:
