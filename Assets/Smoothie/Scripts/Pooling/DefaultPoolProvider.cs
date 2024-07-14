@@ -31,6 +31,11 @@ namespace Smoothie.Scripts.Pooling
                 while (_pooledItems[type].Count > 0)
                 {
                     var view = _pooledItems[type].Dequeue();
+                    if (view == null)
+                    {
+                        continue;
+                    }
+                    
                     Object.Destroy(view.gameObject);
                 }
             }
@@ -70,6 +75,10 @@ namespace Smoothie.Scripts.Pooling
                 _pooledItems.Add(obj.GetType(), items);
             }
 
+            if (obj == null)
+            {
+                return;
+            }
             obj.gameObject.SetActive(false);
             obj.transform.SetParent(_poolParent, false);
             items.Enqueue(obj);
